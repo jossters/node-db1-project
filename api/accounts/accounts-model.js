@@ -17,10 +17,10 @@ async function create({name, budget}) {
   return getById(id)
 }
 
-function updateById(id, {name, budget}) {
+function updateById(id, account) {
    return db('accounts')
    .where('id', id)
-   .update({ name, budget})
+   .update(account)
    .then(() => {
      return getById(id)
    })

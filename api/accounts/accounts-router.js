@@ -26,16 +26,16 @@ router.post('/', checkAccountPayload, checkAccountNameUnique,
 async (req, res, next) => {
   try {
  const data = await Accounts.create(req.body)
- res.json(data)
+ res.status(201).json(data)
   } catch (err) {
     next(err)
   }
 })
 
-router.put('/:id', checkAccountPayload, checkAccountId, checkAccountNameUnique,
+router.put('/:id', checkAccountPayload, checkAccountId,
 async (req, res, next) => {
   try {
-const data = await Accounts.update(req.params.id, req.body)
+const data = await Accounts.updateById(req.params.id, req.body)
  res.status(200).json(data)
   } catch (err) {
     next(err)
@@ -44,7 +44,7 @@ const data = await Accounts.update(req.params.id, req.body)
 
 router.delete('/:id', checkAccountId, async (req, res, next) => {
   try {
-    const data = await Accounts.remove(req.params.id)
+    const data = await Accounts.deleteById(req.params.id)
     res.json(data)
   } catch (err) {
     next(err)

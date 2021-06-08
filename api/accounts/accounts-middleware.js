@@ -1,4 +1,5 @@
 const Account = require("./accounts-model")
+const db = require("../../data/db-config")
 
 function checkAccountPayload(req, res, next) {
   const { name, budget } = req.body;
@@ -22,9 +23,10 @@ function checkAccountPayload(req, res, next) {
 }
 
 async function checkAccountNameUnique(req, res, next) {
-  const name = req.body.name;
   try {
-    const accountName = await Account.getByName(name.trim());
+    const accountName = await db('accounts')
+    .where('name', req.body.name.trim())
+    .first()
     if (accountName) {
       res.status(400).json({ message: "that name is taken" });
     } else {
